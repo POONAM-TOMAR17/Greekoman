@@ -1,33 +1,120 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, QuestionMarkCircleIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
-import MapSection from '../src/components/Homepage/MapSection'
-import TwoSectionComponent from '../src/components/Homepage/twoSectionComponent'
-import BeardbuddySection from '../src/components/Homepage/BeardbuddySection'
-import TrendingProductSection from '../src/components/Homepage/TrendingProductSection'
-import GreekomanSection from '../src/components/Homepage/GreekomanSection'
-import CraftedforManSection from '../src/components/Homepage/CraftedForManSection'
-import BeardCareSection from '../src/components/Homepage/BeardCareSection'
-import ShowerSection from '../src/components/Homepage/ShowerSection'
+import TwoSectionComponent from './twoSectionComponent'
+
+
+
+const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
+const navigation = {
+  categories: [
+    {
+      name: 'Women',
+      featured: [
+        {
+          name: 'New Arrivals',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+        },
+        {
+          name: 'Basic Tees',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+        },
+        {
+          name: 'Accessories',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
+          imageAlt: 'Model wearing minimalist watch with black wristband and white watch face.',
+        },
+        {
+          name: 'Carry',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
+          imageAlt: 'Model opening tan leather long wallet with credit card pockets and cash pouch.',
+        },
+      ],
+    },
+    {
+      name: 'Men',
+      featured: [
+        {
+          name: 'New Arrivals',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt: 'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+        },
+        {
+          name: 'Basic Tees',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+          imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+        {
+          name: 'Accessories',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+          imageAlt:
+            'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
+        },
+        {
+          name: 'Carry',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
+          imageAlt: 'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
+        },
+      ],
+    },
+  ],
+  pages: [
+    { name: 'Company', href: '#' },
+    { name: 'Stores', href: '#' },
+  ],
+}
+const categories = [
+  {
+    name: 'New Arrivals',
+    href: '#',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg',
+  },
+  {
+    name: 'Productivity',
+    href: '#',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-02.jpg',
+  },
+  {
+    name: 'Workspace',
+    href: '#',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-04.jpg',
+  },
+  {
+    name: 'Accessories',
+    href: '#',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-05.jpg',
+  },
+  { name: 'Sale', href: '#', imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-category-03.jpg' },
+]
 const collections = [
   {
     name: 'Handcrafted Collection',
     href: '#',
-    imageSrc: 'img/home/Man1.png',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-01.jpg',
     imageAlt: 'Brown leather key ring with brass metal loops and rivets on wood table.',
     description: 'Keep your phone, keys, and wallet together, so you can lose everything at once.',
   },
   {
     name: 'Organized Desk Collection',
     href: '#',
-    imageSrc: 'img/home/Man2.png',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-02.jpg',
     imageAlt: 'Natural leather mouse pad on white desk next to porcelain mug and keyboard.',
     description: 'The rest of the house will still be a mess, but your desk will look great.',
   },
   {
     name: 'Focus Collection',
     href: '#',
-    imageSrc: 'img/home/Man3.png',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-01-collection-03.jpg',
     imageAlt: 'Person placing task list card into walnut card holder next to felt carrying case on leather desk pad.',
     description: 'Be more productive than enterprise project managers with a single piece of paper.',
   },
@@ -60,122 +147,49 @@ const footerNavigation = {
     { name: 'Pinterest', href: '#' },
   ],
 }
-const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
-const navigation = {
-  categories: [
-    {
-      name: 'About Greeko',
-      featured: [
-        { name: 'Sleep', href: '#' },
-        { name: 'Swimwear', href: '#' },
-        { name: 'Underwear', href: '#' },
-      ],
-      collection: [
-        { name: 'Everything', href: '#' },
-        { name: 'Core', href: '#' },
-        { name: 'New Arrivals', href: '#' },
-        { name: 'Sale', href: '#' },
-      ],
-      categories: [
-        { name: 'Basic Tees', href: '#' },
-        { name: 'Artwork Tees', href: '#' },
-        { name: 'Bottoms', href: '#' },
-        { name: 'Underwear', href: '#' },
-        { name: 'Accessories', href: '#' },
-      ],
-      brands: [
-        { name: 'Full Nelson', href: '#' },
-        { name: 'My Way', href: '#' },
-        { name: 'Re-Arranged', href: '#' },
-        { name: 'Counterfeit', href: '#' },
-        { name: 'Significant Other', href: '#' },
-      ],
-    },
-    {
-      name: 'Greekoman Range',
-      featured: [
-        { name: 'Casual', href: '#' },
-        { name: 'Boxers', href: '#' },
-        { name: 'Outdoor', href: '#' },
-      ],
-      collection: [
-        { name: 'Everything', href: '#' },
-        { name: 'Core', href: '#' },
-        { name: 'New Arrivals', href: '#' },
-        { name: 'Sale', href: '#' },
-      ],
-      categories: [
-        { name: 'Artwork Tees', href: '#' },
-        { name: 'Pants', href: '#' },
-        { name: 'Accessories', href: '#' },
-        { name: 'Boxers', href: '#' },
-        { name: 'Basic Tees', href: '#' },
-      ],
-      brands: [
-        { name: 'Significant Other', href: '#' },
-        { name: 'My Way', href: '#' },
-        { name: 'Counterfeit', href: '#' },
-        { name: 'Re-Arranged', href: '#' },
-        { name: 'Full Nelson', href: '#' },
-      ],
-    },
-  ],
-  pages: [
-    { name: 'Skincare Advice', href: '#' },
-    { name: 'Vasu HealthCare', href: '#' },
-  ],
-}
-
-const trendingProducts = [
+const callouts = [
   {
-    id: 1,
-    name: 'Machined Pen',
-    color: 'Black',
-    price: '$35',
+    name: 'Desk and Office',
+    description: 'Work from home accessories',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg',
+    imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
     href: '#',
-    imageSrc: 'img/home/Long lasting Fresh.png',
-    imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
-    availableColors: [
-      { name: 'Chrome', colorBg: '#E5E7EB' },
-      { name: 'Brass', colorBg: '#FDE68A' },
-      { name: 'Chrome', colorBg: '#E5E7EB' },
-    ],
-  },
-  // More products...
-]
-
-const testimonials = [
-  {
-    id: 1,
-    quote:
-      'My order arrived super quickly. The product is even better than I hoped it would be. Very happy customer over here!',
-    attribution: 'Sarah Peters, New Orleans',
   },
   {
-    id: 2,
-    quote:
-      'I had to return a purchase that didn’t fit. The whole process was so simple that I ended up ordering two new items!',
-    attribution: 'Kelly McPherson, Chicago',
+    name: 'Self-Improvement',
+    description: 'Journals and note-taking',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg',
+    imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
+    href: '#',
   },
   {
-    id: 3,
-    quote:
-      'Now that I’m on holiday for the summer, I’ll probably order a few more shirts. It’s just so convenient, and I know the quality will always be there.',
-    attribution: 'Chris Paul, Phoenix',
+    name: 'Travel',
+    description: 'Daily commute essentials',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg',
+    imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
+    href: '#',
+  },
+  {
+    name: 'Travel',
+    description: 'Daily commute essentials',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg',
+    imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
+    href: '#',
   },
 ]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function DesktopMainComponent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="bg-white">
       {/* Mobile menu */}
-      <Transition.Root show={mobileMenuOpen} as={Fragment}>
+          <Transition.Root show={mobileMenuOpen}
+             as={Fragment}
+          >
         <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setMobileMenuOpen}>
           <Transition.Child
             as={Fragment}
@@ -229,7 +243,9 @@ export default function Example() {
                     ))}
                   </Tab.List>
                 </div>
-                <Tab.Panels as={Fragment}>
+                              <Tab.Panels
+                                  as={Fragment}
+                              >
                   {navigation.categories.map((category) => (
                     <Tab.Panel key={category.name} className="px-4 py-6 space-y-12">
                       <div className="grid grid-cols-2 gap-x-4 gap-y-10">
@@ -410,9 +426,7 @@ export default function Example() {
                                                 <p aria-hidden="true" className="mt-1">
                                                   Shop now
                                                 </p>
-
                                               </div>
-
                                             ))}
                                           </div>
                                         </div>
@@ -496,7 +510,7 @@ export default function Example() {
         <div className="relative max-w-3xl mx-auto py-32 bg-opacity-10 px-6 flex flex-col items-left text-left sm:py-64 lg:px-0">
           <img
             className="h-30 w-auto"
-
+            // src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white"
             src="/img/home/STRENGTH.png"
             alt=""
           />
@@ -509,269 +523,274 @@ export default function Example() {
           >
             Shop Now
           </a>
-          {trendingProducts.map((product) => (
-            <ul role="list" className="mt-auto pt-8 flex items-center justify-left space-x-3">
-              {product.availableColors.map((color) => (
-                <li
-                  key={color.name}
-                  className="w-2 h-2 rounded-full border border-white border-opacity-10"
-                  style={{ backgroundColor: color.colorBg }}
-                >
-                  <span className="sr-only">{color.name}</span>
-                </li>
-              ))}
-            </ul>
-          ))}
         </div>
       </div>
 
       <main>
         {/* Category section */}
+        <section aria-labelledby="category-heading" className="pt-24 sm:pt-32 xl:max-w-7xl xl:mx-auto xl:px-8">
+          <div className="px-4 sm:px-6 sm:flex sm:items-center sm:justify-between lg:px-8 xl:px-0">
+            <h2 id="category-heading" className="text-2xl font-extrabold tracking-tight text-gray-900">
+              Shop by Category
+            </h2>
+            <a href="#" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+              Browse all categories<span aria-hidden="true"> &rarr;</span>
+            </a>
+          </div>
 
-        {/* <TwoSectionComponent /> */}
-        <div className="bg-white">
-          {/* Mobile menu */}
-          <Transition.Root show={mobileMenuOpen}
-          //   as={Fragment}
-          >
-            <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setMobileMenuOpen}>
-              <Transition.Child
-                // as={Fragment}
-                enter="transition-opacity ease-linear duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity ease-linear duration-300"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
-
-              <Transition.Child
-                // as={Fragment}
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="-translate-x-full"
-                enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-x-0"
-                leaveTo="-translate-x-full"
-              >
-                <div className="relative max-w-xs w-full bg-white shadow-xl pb-12 flex flex-col overflow-y-auto">
-                  <div className="px-4 pt-5 pb-2 flex">
-                    <button
-                      type="button"
-                      className="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400"
-                      onClick={() => setMobileMenuOpen(false)}
+          <div className="mt-4 flow-root">
+            <div className="-my-2">
+              <div className="box-content py-2 relative h-80 overflow-x-auto xl:overflow-visible">
+                <div className="absolute min-w-screen-xl px-4 flex space-x-8 sm:px-6 lg:px-8 xl:relative xl:px-0 xl:space-x-0 xl:grid xl:grid-cols-5 xl:gap-x-8">
+                  {categories.map((category) => (
+                    <a
+                      key={category.name}
+                      href={category.href}
+                      className="relative w-56 h-80 rounded-lg p-6 flex flex-col overflow-hidden hover:opacity-75 xl:w-auto"
                     >
-                      <span className="sr-only">Close menu</span>
-                      <XIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-
-                  {/* Links */}
-                  <Tab.Group as="div" className="mt-2">
-                    <div className="border-b border-gray-200">
-                      <Tab.List className="-mb-px flex px-4 space-x-8">
-                        {navigation.categories.map((category) => (
-                          <Tab
-                            key={category.name}
-                            className={({ selected }) =>
-                              classNames(
-                                selected ? 'text-indigo-600 border-indigo-600' : 'text-gray-900 border-transparent',
-                                'flex-1 whitespace-nowrap py-4 px-1 border-b-2 text-base font-medium'
-                              )
-                            }
-                          >
-                            {category.name}
-                          </Tab>
-                        ))}
-                      </Tab.List>
-                    </div>
-                    <Tab.Panels
-                    //  as={Fragment}
-                    >
-                      {navigation.categories.map((category, categoryIdx) => (
-                        <Tab.Panel key={category.name} className="px-4 pt-10 pb-6 space-y-12">
-                          <div className="grid grid-cols-1 items-start gap-y-10 gap-x-6">
-                            <div className="grid grid-cols-1 gap-y-10 gap-x-6">
-                              <div>
-                                <p id={`mobile-featured-heading-${categoryIdx}`} className="font-medium text-gray-900">
-                                  Featured
-                                </p>
-                                <ul
-                                  role="list"
-                                  aria-labelledby={`mobile-featured-heading-${categoryIdx}`}
-                                  className="mt-6 space-y-6"
-                                >
-                                  {category.featured.map((item) => (
-                                    <li key={item.name} className="flex">
-                                      <a href={item.href} className="text-gray-500">
-                                        {item.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                              <div>
-                                <p id="mobile-categories-heading" className="font-medium text-gray-900">
-                                  Categories
-                                </p>
-                                <ul role="list" aria-labelledby="mobile-categories-heading" className="mt-6 space-y-6">
-                                  {category.categories.map((item) => (
-                                    <li key={item.name} className="flex">
-                                      <a href={item.href} className="text-gray-500">
-                                        {item.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
-                            <div className="grid grid-cols-1 gap-y-10 gap-x-6">
-                              <div>
-                                <p id="mobile-collection-heading" className="font-medium text-gray-900">
-                                  Collection
-                                </p>
-                                <ul role="list" aria-labelledby="mobile-collection-heading" className="mt-6 space-y-6">
-                                  {category.collection.map((item) => (
-                                    <li key={item.name} className="flex">
-                                      <a href={item.href} className="text-gray-500">
-                                        {item.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-
-                              <div>
-                                <p id="mobile-brand-heading" className="font-medium text-gray-900">
-                                  Brands
-                                </p>
-                                <ul role="list" aria-labelledby="mobile-brand-heading" className="mt-6 space-y-6">
-                                  {category.brands.map((item) => (
-                                    <li key={item.name} className="flex">
-                                      <a href={item.href} className="text-gray-500">
-                                        {item.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab.Panel>
-                      ))}
-                    </Tab.Panels>
-                  </Tab.Group>
-
-                  <div className="border-t border-gray-200 py-6 px-4 space-y-6">
-                    {navigation.pages.map((page) => (
-                      <div key={page.name} className="flow-root">
-                        <a href={page.href} className="-m-2 p-2 block font-medium text-gray-900">
-                          {page.name}
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="border-t border-gray-200 py-6 px-4 space-y-6">
-                    <div className="flow-root">
-                      <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
-                        Create an account
-                      </a>
-                    </div>
-                    <div className="flow-root">
-                      <a href="#" className="-m-2 p-2 block font-medium text-gray-900">
-                        Sign in
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-gray-200 py-6 px-4 space-y-6">
-                    {/* Currency selector */}
-                    <form>
-                      <div className="inline-block">
-                        <label htmlFor="mobile-currency" className="sr-only">
-                          Currency
-                        </label>
-                        <div className="-ml-2 group relative border-transparent rounded-md focus-within:ring-2 focus-within:ring-white">
-                          <select
-                            id="mobile-currency"
-                            name="currency"
-                            className="bg-none border-transparent rounded-md py-0.5 pl-2 pr-5 flex items-center text-sm font-medium text-gray-700 group-hover:text-gray-800 focus:outline-none focus:ring-0 focus:border-transparent"
-                          >
-                            {currencies.map((currency) => (
-                              <option key={currency}>{currency}</option>
-                            ))}
-                          </select>
-                          <div className="absolute right-0 inset-y-0 flex items-center pointer-events-none">
-                            <svg
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 20 20"
-                              className="w-5 h-5 text-gray-500"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.5"
-                                d="M6 8l4 4 4-4"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                      <span aria-hidden="true" className="absolute inset-0">
+                        <img src={category.imageSrc} alt="" className="w-full h-full object-center object-cover" />
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
+                      />
+                      <span className="relative mt-auto text-center text-xl font-bold text-white">{category.name}</span>
+                    </a>
+                  ))}
                 </div>
-              </Transition.Child>
-            </Dialog>
-          </Transition.Root>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 px-4 sm:hidden">
+            <a href="#" className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+              Browse all categories<span aria-hidden="true"> &rarr;</span>
+            </a>
+          </div>
+        </section>
+        <TwoSectionComponent />
+        {/* Featured section */}
+        <section
+          aria-labelledby="social-impact-heading"
+          className="max-w-7xl mx-auto pt-24 px-4 sm:pt-32 sm:px-6 lg:px-8"
+        >
+          <div className="relative rounded-lg overflow-hidden">
+            <div className="absolute inset-0">
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/home-page-01-feature-section-01.jpg"
+                alt=""
+                className="w-full h-full object-center object-cover"
+              />
+            </div>
+            <div className="relative bg-gray-900 bg-opacity-75 py-32 px-6 sm:py-40 sm:px-12 lg:px-16">
+              <div className="relative max-w-3xl mx-auto flex flex-col items-center text-center">
+                <h2
+                  id="social-impact-heading"
+                  className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+                >
+                  <span className="block sm:inline">Level up</span>
+                  <span className="block sm:inline">your desk</span>
+                </h2>
+                <p className="mt-3 text-xl text-white">
+                  Make your desk beautiful and organized. Post a picture to social media and watch it get more likes
+                  than life-changing announcements. Reflect on the shallow nature of existence. At least you have a
+                  really nice desk setup.
+                </p>
+                <a
+                  href="#"
+                  className="mt-8 w-full block bg-white border border-transparent rounded-md py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
+                >
+                  Shop Workspace
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="bg-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">
 
 
-          <main>
-            {/* Hero */}
-            <CraftedforManSection />
+              <div className="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-6">
+                {callouts.map((callout) => (
+                  <div key={callout.name} className="group relative">
+                    <div className="relative w-full h-80 bg-white rounded-full overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
+                      <img
+                        src={callout.imageSrc}
+                        alt={callout.imageAlt}
+                        className="w-full h-full object-center object-cover"
+                      />
+                    </div>
+                    <h3 className="mt-6 text-sm text-gray-500">
+                      <a href={callout.href}>
+                        <span className="absolute inset-0" />
+                        {callout.name}
+                      </a>
+                    </h3>
+                    <p className="text-base font-semibold text-gray-900">{callout.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Collection section */}
+        <section
+          aria-labelledby="collection-heading"
+          className="max-w-xl mx-auto pt-24 px-4 sm:pt-32 sm:px-6 lg:max-w-7xl lg:px-8"
+        >
+          <h2 id="collection-heading" className="text-2xl font-extrabold tracking-tight text-gray-900">
+            Shop by Collection
+          </h2>
+          <p className="mt-4 text-base text-gray-500">
+            Each season, we collaborate with world-class designers to create a collection inspired by the natural world.
+          </p>
 
-            <BeardbuddySection />
-
-            {/* Trending products */}
-            <TrendingProductSection />
-
-
-
-            {/* Sale and testimonials */}
-            <div className="relative overflow-hidden">
-              {/* Decorative background image and gradient */}
-              <div aria-hidden="true" className="absolute inset-0">
-                <div className="absolute inset-0 max-w-7xl mx-auto overflow-hidden xl:px-8">
+          <div className="mt-10 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
+            {collections.map((collection) => (
+              <a key={collection.name} href={collection.href} className="group block">
+                <div
+                  aria-hidden="true"
+                  className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden group-hover:opacity-75 lg:aspect-w-5 lg:aspect-h-6"
+                >
                   <img
-                    src="https://tailwindui.com/img/ecommerce-images/home-page-02-sale-full-width.jpg"
-                    alt=""
+                    src={collection.imageSrc}
+                    alt={collection.imageAlt}
                     className="w-full h-full object-center object-cover"
                   />
                 </div>
-                <div className="absolute inset-0 bg-white bg-opacity-75" />
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white" />
-              </div>
+                <h3 className="mt-4 text-base font-semibold text-gray-900">{collection.name}</h3>
+                <p className="mt-2 text-sm text-gray-500">{collection.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
 
-
-
+        {/* Featured section */}
+        <section aria-labelledby="comfort-heading" className="max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+          <div className="relative rounded-lg overflow-hidden">
+            <div className="absolute inset-0">
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/home-page-01-feature-section-02.jpg"
+                alt=""
+                className="w-full h-full object-center object-cover"
+              />
             </div>
-          </main>
-
-
-        </div>
-
-        <ShowerSection />
-        <BeardCareSection />
+            <div className="relative bg-gray-900 bg-opacity-75 py-32 px-6 sm:py-40 sm:px-12 lg:px-16">
+              <div className="relative max-w-3xl mx-auto flex flex-col items-center text-center">
+                <h2 id="comfort-heading" className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                  Simple productivity
+                </h2>
+                <p className="mt-3 text-xl text-white">
+                  Endless tasks, limited hours, a single piece of paper. Not really a haiku, but we're doing our best
+                  here. No kanban boards, burndown charts, or tangled flowcharts with our Focus system. Just the
+                  undeniable urge to fill empty circles.
+                </p>
+                <a
+                  href="#"
+                  className="mt-8 w-full block bg-white border border-transparent rounded-md py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
+                >
+                  Shop Focus
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-      <TwoSectionComponent />
-      <GreekomanSection />
-      <MapSection />
 
+      <footer aria-labelledby="footer-heading" className="bg-gray-900">
+        <h2 id="footer-heading" className="sr-only">
+          Footer
+        </h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-20 xl:grid xl:grid-cols-3 xl:gap-8">
+            <div className="grid grid-cols-2 gap-8 xl:col-span-2">
+              <div className="space-y-12 md:space-y-0 md:grid md:grid-cols-2 md:gap-8">
+                <div>
+                  <h3 className="text-sm font-medium text-white">Shop</h3>
+                  <ul role="list" className="mt-6 space-y-6">
+                    {footerNavigation.shop.map((item) => (
+                      <li key={item.name} className="text-sm">
+                        <a href={item.href} className="text-gray-300 hover:text-white">
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-white">Company</h3>
+                  <ul role="list" className="mt-6 space-y-6">
+                    {footerNavigation.company.map((item) => (
+                      <li key={item.name} className="text-sm">
+                        <a href={item.href} className="text-gray-300 hover:text-white">
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="space-y-12 md:space-y-0 md:grid md:grid-cols-2 md:gap-8">
+                <div>
+                  <h3 className="text-sm font-medium text-white">Account</h3>
+                  <ul role="list" className="mt-6 space-y-6">
+                    {footerNavigation.account.map((item) => (
+                      <li key={item.name} className="text-sm">
+                        <a href={item.href} className="text-gray-300 hover:text-white">
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-white">Connect</h3>
+                  <ul role="list" className="mt-6 space-y-6">
+                    {footerNavigation.connect.map((item) => (
+                      <li key={item.name} className="text-sm">
+                        <a href={item.href} className="text-gray-300 hover:text-white">
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="mt-12 md:mt-16 xl:mt-0">
+              <h3 className="text-sm font-medium text-white">Sign up for our newsletter</h3>
+              <p className="mt-6 text-sm text-gray-300">The latest deals and savings, sent to your inbox weekly.</p>
+              <form className="mt-2 flex sm:max-w-md">
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email-address"
+                  type="text"
+                  autoComplete="email"
+                  required
+                  className="appearance-none min-w-0 w-full bg-white border border-white rounded-md shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:border-white focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-white"
+                />
+                <div className="ml-4 flex-shrink-0">
+                  <button
+                    type="submit"
+                    className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500"
+                  >
+                    Sign up
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 py-10">
+            <p className="text-sm text-gray-400">Copyright &copy; 2021 Clothing Company Inc.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
